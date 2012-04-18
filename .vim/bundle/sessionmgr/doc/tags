@@ -1,0 +1,13 @@
+'SessionMgr_AutoManage'	sessionmgr.txt	/*'SessionMgr_AutoManage'*
+'SessionMgr_DefaultName'	sessionmgr.txt	/*'SessionMgr_DefaultName'*
+'SessionMgr_Dir'	sessionmgr.txt	/*'SessionMgr_Dir'*
+:SD	sessionmgr.txt	/*:SD*
+:SE	sessionmgr.txt	/*:SE*
+:SL	sessionmgr.txt	/*:SL*
+:SQ	sessionmgr.txt	/*:SQ*
+:SR	sessionmgr.txt	/*:SR*
+:SS	sessionmgr.txt	/*:SS*
+SessionMgr.txt	sessionmgr.txt	/*SessionMgr.txt*
+sessionmgr-about	sessionmgr.txt	/*sessionmgr-about*
+sessionmgr-commands	sessionmgr.txt	/*sessionmgr-commands*
+sessionmgr-configure	sessionmgr.txt	/*sessionmgr-configure*

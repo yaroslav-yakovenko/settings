@@ -1,0 +1,6 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1383
+
+SessionMgr allows you to easilly and quickly save and restore multiple sessions within Vim.
+
+Based loosely on the plugin by Andrew Rodionoff:
+        http://www.vim.org/scripts/script.php?script_id=780
