@@ -1,0 +1,14 @@
+[user]
+	name = Yaroslav Yakovenko
+	email = yyv.yyv@gmail.com
+ [alias]
+  co = checkout
+   ci = commit
+    st = status
+     br = branch
+      hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+
+[color]
+diff = auto
+branch = auto
+status = auto
