@@ -1,0 +1,9 @@
+перед началом работы выполните команду
+Это установит вам плагин vundle - который будет управлять осталными плагинами
+
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+
+затем в VIM выполните
+BundleInstall
+
+это устанвоит все плагины которые прописаны в .vimrc
