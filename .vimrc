@@ -45,6 +45,7 @@ Bundle 'git://github.com/majutsushi/tagbar.git'
 Bundle 'git://github.com/tomtom/checksyntax_vim.git'
 Bundle 'git://github.com/vim-scripts/highlight_current_line.vim.git'
 Bundle 'git://github.com/tpope/vim-surround.git'
+Bundle 'git://github.com/vim-scripts/bufexplorer.zip.git'
 
 " NERDTree                                                                                                                  
 nmap <Bs> :NERDTreeToggle<CR>                                           
@@ -188,9 +189,23 @@ imap <F2> <Esc>:w!<CR>
 vmap <F2> <Esc>:w!<CR>
 
 " Закрыть VIM
-"nmap <F5> :q<CR>
-"imap <F5> <Esc>:q<CR>
-"vmap <F5> <Esc>:q<CR>
+"nmap <F10> :q<CR>
+"imap <F10> <Esc>:q<CR>
+"vmap <F10> <Esc>:q<CR>
+
+nmap <C-F5> <Esc>:BufExplorerVerticalSplit<cr>
+vmap <C-F5> <esc>:BufExplorerVerticalSplit<cr>
+imap <C-F5> <esc>:BufExplorerVerticalSplit<cr>
+
+" F6 - предыдущий буфер
+nmap <C-F6> :bp<cr>
+vmap <C-F6> <esc>:bp<cr>i
+imap <C-F6> <esc>:bp<cr>i
+
+" F7 - следующий буфер
+nmap <C-F7> :bn<cr>
+vmap <C-F7> <esc>:bn<cr>i
+imap <C-F7> <esc>:bn<cr>i
 
 " Более привычные Page Up/Down, когда курсор остаётся в той же строке,
 " а не переносится вверх/вниз экрана, как при стандартном PgUp/PgDown.
@@ -283,5 +298,3 @@ endfunction
 set tabline=%!MyTabLine()
 set guitablabel=%!MyGuiTabLabel()
 " Задаем собственные функции для назначения имен заголовкам табов <--
-
-
