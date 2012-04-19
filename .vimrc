@@ -32,7 +32,6 @@ Bundle 'git://github.com/scrooloose/nerdtree.git'
 Bundle 'git://github.com/majutsushi/tagbar.git' 
 Bundle 'git://github.com/tomtom/checksyntax_vim.git'
 Bundle 'git://github.com/vim-scripts/highlight_current_line.vim.git'
-Bundle 'git://github.com/vim-scripts/bufexplorer.zip.git'
 Bundle 'git://github.com/tpope/vim-surround.git'
 
 " NERDTree                                                                                                                  
