@@ -97,6 +97,7 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+export TERM=xterm-256color
 alias mc='export TERM=xterm-256color; mc -S xoria256'
 alias gst='git status '
 alias ga='git add '
