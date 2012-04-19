@@ -36,7 +36,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -97,17 +97,8 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
- export TERM=xterm-256color
- alias mc='env TERM=xterm-256color mc -S xoria256'
-
-function git_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[git:\1]/';
-}
-function git_status {
-    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && tput setaf 1 || tput setaf 3
-}
-
-alias gs='git status '
+alias mc='export TERM=xterm-256color; mc -S xoria256'
+alias gst='git status '
 alias ga='git add '
 alias gb='git branch '
 alias gc='git commit'
@@ -119,4 +110,22 @@ alias gx='gitx --all'
 alias got='git '
 alias get='git '
 
-PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\$(git_status)\]\$(git_branch)\[\$(tput sgr 0)\]$ "
+function git_branch { 
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[git:\1]/';
+    }
+
+
+function git_status {
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && tput setaf 1 || tput setaf 3
+ }
+ 
+  # tput +
+ # sgr 0 = default color;
+ # setaf = foreground; setab = background;
+ # 0 = black; 1 = red; 2 = green; 3 = yellow; 4 = blue; 5 = purple; 6 = cyan; 7 = light gray;
+
+# prompt becomes red if git working directory has modified files
+# otherwise it's green
+
+ ## INFO: wrap colors in \[foo\] to fix to line wrap issues.
+ export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\$(git_status)\]\$(git_branch)\[\$(tput sgr 0)\]$ "

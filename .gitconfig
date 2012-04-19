@@ -1,14 +1,36 @@
 [user]
 	name = Yaroslav Yakovenko
 	email = yyv.yyv@gmail.com
- [alias]
-  co = checkout
-   ci = commit
-    st = status
-     br = branch
-      hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-
 [color]
-diff = auto
-branch = auto
-status = auto
+	branch = auto
+	diff = auto
+	status = auto
+	
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+	
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+	
+[alias]
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --all --date=short
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 1212x598+312+206
+	history-view-vpane-position = 272
+	main-window-view = HistoryView
+	file-view-vpane-position = 519
