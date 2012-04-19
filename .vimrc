@@ -17,11 +17,23 @@ syntax on
 " например, символы табуляции раскладываются в кучу пробелов).
 set mouse=a
 
+set showmatch " показывать первую парную скобку после ввода второй
+set autoread " перечитывать изменённые файлы автоматически
+set title " показывать имя буфера в заголовке терминала
+set history=128 " хранить больше истории команд
+set undolevels=2048 " хранить историю изменений числом N
+" При копировании добавить в иксовый буфер
+nmap yy yy:silent .w !xclip
+vmap y y:silent '<,'> w !xclip
+"Показывать строку с позицией курсора
+ set ruler
+autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cword>'))
+
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-
- " let Vundle manage Vundle
- " required! 
+" let Vundle manage Vundle
+ "required! 
  Bundle 'gmarik/vundle'
 
  " My Bundles here:
@@ -129,7 +141,7 @@ set foldmethod=manual
 set keymap=russian-jcukenwin
 " Раскладка по умолчанию - английская
 set iminsert=0
-
+set imsearch=0 " аналогично для строки поиска и ввода команд
 
 " Включаем фолдинг (сворачивание участков кода)
 "set foldenable
@@ -191,3 +203,85 @@ imap <PageDown> <C-O><C-D><C-O><C-D>
 
 
 " Горячие клавиши <--
+
+function! MyKeyMapHighlight()
+	if &iminsert == 0 " при английской раскладке статусная строка текущего окна будет серого цвета
+		hi StatusLine ctermfg=DarkBlue guifg=DarkBlue
+	else " а при русской - зеленого.
+		hi StatusLine ctermfg=DarkGreen guifg=DarkGreen
+	endif
+endfunction
+
+call MyKeyMapHighlight() " при старте Vim устанавливать цвет статусной строки
+autocmd WinEnter * :call MyKeyMapHighlight() " при смене окна обновлять информацию о раскладках
+
+
+" Задаем собственные функции для назначения имен заголовкам табов -->
+function! MyTabLine()
+	let tabline = ''
+
+	" Формируем tabline для каждой вкладки -->
+	for i in range(tabpagenr('$'))
+		" Подсвечиваем заголовок выбранной в данный момент вкладки.
+		if i + 1 == tabpagenr()
+			let tabline .= '%#TabLineSel#'
+		else
+			let tabline .= '%#TabLine#'
+		endif
+
+		" Устанавливаем номер вкладки
+		let tabline .= '%' . (i + 1) . 'T'
+
+		" Получаем имя вкладки
+		let tabline .= ' %{MyTabLabel(' . (i + 1) . ')} |'
+	endfor
+	" Формируем tabline для каждой вкладки <--
+
+	" Заполняем лишнее пространство
+	let tabline .= '%#TabLineFill#%T'
+
+	" Выровненная по правому краю кнопка закрытия вкладки
+	if tabpagenr('$') > 1
+		let tabline .= '%=%#TabLine#%999XX'
+	endif
+
+	return tabline
+endfunction
+
+function! MyTabLabel(n)
+	let label = ''
+	let buflist = tabpagebuflist(a:n)
+
+	" Имя файла и номер вкладки -->
+	let label = substitute(bufname(buflist[tabpagewinnr(a:n) - 1]), '.*/', '', '')
+
+	if label == ''
+		let label = '[No Name]'
+	endif
+
+	let label .= ' (' . a:n . ')'
+	" Имя файла и номер вкладки <--
+
+	" Определяем, есть ли во вкладке хотя бы один
+	" модифицированный буфер.
+	" -->
+	for i in range(len(buflist))
+		if getbufvar(buflist[i], "&modified")
+			let label = '[+] ' . label
+			break
+		endif
+	endfor
+	" <--
+
+	return label
+endfunction
+
+function! MyGuiTabLabel()
+	return '%{MyTabLabel(' . tabpagenr() . ')}'
+endfunction
+
+set tabline=%!MyTabLine()
+set guitablabel=%!MyGuiTabLabel()
+" Задаем собственные функции для назначения имен заголовкам табов <--
+
+
