@@ -22,12 +22,14 @@ set autoread " перечитывать изменённые файлы авто
 set title " показывать имя буфера в заголовке терминала
 set history=128 " хранить больше истории команд
 set undolevels=2048 " хранить историю изменений числом N
+
 " При копировании добавить в иксовый буфер
-nmap yy yy:silent .w !xclip
-vmap y y:silent '<,'> w !xclip
+nmap yy yy:silent .w !xclip<cr>
+vmap y y:silent '<,'> w !xclip<cr>
+
 "Показывать строку с позицией курсора
- set ruler
-autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cword>'))
+set ruler
+"autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cword>'))
 
 
 set rtp+=~/.vim/bundle/vundle/
@@ -36,7 +38,7 @@ call vundle#rc()
  "required! 
  Bundle 'gmarik/vundle'
 
- " My Bundles here:
+" My Bundles here:
 "
 Bundle 'git://github.com/mattn/zencoding-vim.git'
 Bundle 'git://github.com/scrooloose/nerdcommenter.git'
@@ -59,7 +61,7 @@ let NERDTreeDirArrows=1 " Tells the NERD tree to use arrows instead of + ~ chars
 let NERDTreeBookmarksFile= $HOME . '/.vim/.NERDTreeBookmarks'
 
 filetype plugin indent on
-au BufRead,BufNewFile *.stpl		setfiletype html
+au BufRead,BufNewFile *.stpl	setfiletype html
 
 " Отключаем создание бэкапов
 set nobackup
@@ -74,7 +76,6 @@ set dir=~/.vim/swap/
 if has("autocmd")                                                     
 	autocmd! bufwritepost .vimrc source $MYVIMRC                                                                        
 endif                                                                 
-
  
 " Не выгружать буфер, когда переключаемся на другой
 " Это позволяет редактировать несколько файлов в один и тот же момент без необходимости сохранения каждый раз
@@ -120,11 +121,6 @@ set incsearch
 set nowrapscan
 " Игнорировать регистр букв при поиске
 set ignorecase
-
-
-
-"" Размер истории для отмены
-"set undolevels=1000
 
 " Список кодировок файлов для автоопределения
 set fileencodings=utf-8,cp1251,koi8-r,cp866
@@ -183,6 +179,11 @@ nmap <F3> :nohlsearch<CR>
 imap <F3> <Esc>:nohlsearch<CR>
 vmap <F3> <Esc>:nohlsearch<CR>gv
 
+" по звездочке не прыгать на следующее найденное, а просто подсветить
+nnoremap * *N
+" " выключить подсветку: повесить на горячую клавишу Ctrl-F8
+"nnoremap <C-F8> :nohlsearch<CR>
+"
 " Сохранить файл
 nmap <F2> :w!<CR>
 imap <F2> <Esc>:w!<CR>
@@ -203,9 +204,9 @@ vmap <C-F6> <esc>:bp<cr>i
 imap <C-F6> <esc>:bp<cr>i
 
 " F7 - следующий буфер
-nmap <C-F7> :bn<cr>
-vmap <C-F7> <esc>:bn<cr>i
-imap <C-F7> <esc>:bn<cr>i
+nmap <S-F6> :bn<cr>
+vmap <S-F6> <esc>:bn<cr>i
+imap <S-F6> <esc>:bn<cr>i
 
 " Более привычные Page Up/Down, когда курсор остаётся в той же строке,
 " а не переносится вверх/вниз экрана, как при стандартном PgUp/PgDown.
@@ -218,6 +219,12 @@ imap <PageDown> <C-O><C-D><C-O><C-D>
 
 
 " Горячие клавиши <--
+" Восстановление позиции курсора при открытии файла в Vim
+if has("autocmd")
+    set viewoptions=cursor,folds
+    au BufWinLeave * mkview
+    au BufWinEnter * silent loadview
+endif
 
 function! MyKeyMapHighlight()
 	if &iminsert == 0 " при английской раскладке статусная строка текущего окна будет серого цвета
@@ -229,7 +236,11 @@ endfunction
 
 call MyKeyMapHighlight() " при старте Vim устанавливать цвет статусной строки
 autocmd WinEnter * :call MyKeyMapHighlight() " при смене окна обновлять информацию о раскладках
-
+ cmap <silent> <C-^> <C-^>
+ imap <silent> <C-^> <C-^>X<Esc>:call MyKeyMapHighlight()<CR>a<C-H>
+ nmap <silent> <C-^> a<C-^><Esc>:call MyKeyMapHighlight()<CR>
+ vmap <silent> <C-^> <Esc>a<C-^><Esc>:call MyKeyMapHighlight()<CR>gv
+    " <--
 
 " Задаем собственные функции для назначения имен заголовкам табов -->
 function! MyTabLine()
@@ -298,3 +309,45 @@ endfunction
 set tabline=%!MyTabLine()
 set guitablabel=%!MyGuiTabLabel()
 " Задаем собственные функции для назначения имен заголовкам табов <--
+set wildmenu
+set wcm=<Tab>
+" проверка орфографии:
+menu SetSpell.ru  :set spl=ru spell<CR>
+menu SetSpell.en  :set spl=en spell<CR>
+menu SetSpell.off :set nospell<CR>
+map <F10> :emenu SetSpell.<Tab>
+" выбор альтернатив:
+imap <F12> <Esc> z=<CR>i
+map <F12> z=<CR>
+
+
+   " Меню Encoding -->
+        " Выбор кодировки, в которой читать файл -->
+            set wildmenu
+            set wcm=<Tab>
+            menu Encoding.Read.utf-8<Tab><F7> :e ++enc=utf8 <CR>
+            menu Encoding.Read.windows-1251<Tab><F7> :e ++enc=cp1251<CR>
+            menu Encoding.Read.koi8-r<Tab><F7> :e ++enc=koi8-r<CR>
+            menu Encoding.Read.cp866<Tab><F7> :e ++enc=cp866<CR>
+            map <F7> :emenu Encoding.Read.<TAB>
+        " Выбор кодировки, в которой читать файл <--
+
+        " Выбор кодировки, в которой сохранять файл -->
+            set wildmenu
+            set wcm=<Tab>
+            menu Encoding.Write.utf-8<Tab><S-F7> :set fenc=utf8 <CR>
+            menu Encoding.Write.windows-1251<Tab><S-F7> :set fenc=cp1251<CR>
+            menu Encoding.Write.koi8-r<Tab><S-F7> :set fenc=koi8-r<CR>
+            menu Encoding.Write.cp866<Tab><S-F7> :set fenc=cp866<CR>
+            map <S-F7> :emenu Encoding.Write.<TAB>
+        " Выбор кодировки, в которой сохранять файл <--
+
+        " Выбор формата концов строк (dos - <CR><NL>, unix - <NL>, mac - <CR>) -->
+            set wildmenu
+            set wcm=<Tab>
+            menu Encoding.End_line_format.unix<Tab><C-F7> :set fileformat=unix<CR>
+            menu Encoding.End_line_format.dos<Tab><C-F7> :set fileformat=dos<CR>
+            menu Encoding.End_line_format.mac<Tab><C-F7> :set fileformat=mac<CR>
+            map <C-F7> :emenu Encoding.End_line_format.<TAB>
+        " Выбор формата концов строк (dos - <CR><NL>, unix - <NL>, mac - <CR>) <--
+    " Меню Encoding <--
