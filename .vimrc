@@ -1,6 +1,6 @@
 "скин ксория
-"color xoria256
-colorscheme xoria256
+color xoria256
+"colorscheme xoria256
 
 " Размер табуляции
 set tabstop=4 softtabstop=4 
@@ -22,9 +22,9 @@ set autoread " перечитывать изменённые файлы авто
 set title " показывать имя буфера в заголовке терминала
 set history=128 " хранить больше истории команд
 set undolevels=2048 " хранить историю изменений числом N
-
 " При копировании добавить в иксовый буфер
 nmap yy yy:silent .w !xclip<cr>
+
 vmap y y:silent '<,'> w !xclip<cr>
 
 "Показывать строку с позицией курсора
@@ -38,7 +38,7 @@ call vundle#rc()
  "required! 
  Bundle 'gmarik/vundle'
 
-" My Bundles here:
+ " My Bundles here:
 "
 Bundle 'git://github.com/mattn/zencoding-vim.git'
 Bundle 'git://github.com/scrooloose/nerdcommenter.git'
@@ -48,7 +48,7 @@ Bundle 'git://github.com/tomtom/checksyntax_vim.git'
 Bundle 'git://github.com/vim-scripts/highlight_current_line.vim.git'
 Bundle 'git://github.com/tpope/vim-surround.git'
 Bundle 'git://github.com/vim-scripts/bufexplorer.zip.git'
-
+"Bundle 'git://github.com/kana/vim-fakeclip.git'
 " NERDTree                                                                                                                  
 nmap <Bs> :NERDTreeToggle<CR>                                           
 let NERDTreeShowBookmarks=1                                             
@@ -120,13 +120,13 @@ set incsearch
 " Останавливать поиск при достижении конца файла
 set nowrapscan
 " Игнорировать регистр букв при поиске
-set ignorecase
+"set ignorecase
 
 " Список кодировок файлов для автоопределения
 set fileencodings=utf-8,cp1251,koi8-r,cp866
 
 " Включает виртуальный звонок (моргает, а не бибикает при ошибках)
-set visualbell
+"set visualbell
 
 " Перемещать курсор на следующую строку при нажатии на клавиши вправо-влево и пр.
 set whichwrap=b,s,<,>,[,],l,h
@@ -144,7 +144,13 @@ set imsearch=0 " аналогично для строки поиска и вво
 "set foldenable
 " Сворачивание по синтаксу
 "set fdm=syntax
-
+" highlight trailing spaces
+au BufNewFile,BufRead * let b:mtrailingws=matchadd('ErrorMsg', '\s\+$', -1)
+" highlight tabs between spaces
+au BufNewFile,BufRead * let b:mtabbeforesp=matchadd('ErrorMsg', '\v(\t+)\ze( +)', -1)
+au BufNewFile,BufRead * let b:mtabaftersp=matchadd('ErrorMsg', '\v( +)\zs(\t+)', -1)
+" disable matches in help buffers
+au BufEnter,FileType help call clearmatches()
 
 " Горячие клавиши -->
 "запустить Tagbar
