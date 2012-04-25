@@ -3,8 +3,8 @@ color xoria256
 "colorscheme xoria256
 
 " Размер табуляции
-set tabstop=4 softtabstop=4 
-" Размер сдвига при нажатии на клавиши << и   >>  
+set tabstop=4 softtabstop=4
+" Размер сдвига при нажатии на клавиши << и   >
 set shiftwidth=4
 " Копирует отступ от предыдущей строки
 set autoindent
@@ -35,7 +35,7 @@ set ruler
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 " let Vundle manage Vundle
- "required! 
+ "required
  Bundle 'gmarik/vundle'
 
  " My Bundles here:
@@ -43,19 +43,21 @@ call vundle#rc()
 Bundle 'git://github.com/mattn/zencoding-vim.git'
 Bundle 'git://github.com/scrooloose/nerdcommenter.git'
 Bundle 'git://github.com/scrooloose/nerdtree.git'
-Bundle 'git://github.com/majutsushi/tagbar.git' 
+Bundle 'git://github.com/majutsushi/tagbar.git'
 Bundle 'git://github.com/tomtom/checksyntax_vim.git'
 Bundle 'git://github.com/vim-scripts/highlight_current_line.vim.git'
 Bundle 'git://github.com/tpope/vim-surround.git'
 Bundle 'git://github.com/vim-scripts/bufexplorer.zip.git'
-"Bundle 'git://github.com/kana/vim-fakeclip.git'
-" NERDTree                                                                                                                  
-nmap <Bs> :NERDTreeToggle<CR>                                           
-let NERDTreeShowBookmarks=1                                             
-let NERDTreeChDirMode=2                                                 
-let NERDTreeQuitOnOpen=1                                                
-let NERDTreeShowHidden=1                                                
-let NERDTreeKeepTreeInNewTab=0                                          
+Bundle 'git://github.com/vim-scripts/spacehi.vim.git'
+" NERDTree
+nmap <Bs> :NERDTreeToggle<CR>
+nmap <C-F9> :ToggleSpaceHi<CR>
+
+let NERDTreeShowBookmarks=1
+let NERDTreeChDirMode=2
+let NERDTreeQuitOnOpen=1
+let NERDTreeShowHidden=1
+let NERDTreeKeepTreeInNewTab=0
 let NERDTreeMinimalUI=1 " Disables display of the 'Bookmarks' label and Press ? for help' text.
 let NERDTreeDirArrows=1 " Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
 let NERDTreeBookmarksFile= $HOME . '/.vim/.NERDTreeBookmarks'
@@ -70,13 +72,13 @@ set noswapfile
 " Все swap файлы будут помещаться в эту папку
 set dir=~/.vim/swap/
 
-" AutoReload .vimrc                                                         
+" AutoReload .vimr 
 " from http://vimcasts.org/episodes/updating-your-vimrc-file-on-the-fly/
-" Source the vimrc file after saving it                                 
-if has("autocmd")                                                     
-	autocmd! bufwritepost .vimrc source $MYVIMRC                                                                        
-endif                                                                 
- 
+" Source the vimrc file after saving it
+if has("autocmd")
+	autocmd! bufwritepost .vimrc source $MYVIMRC 
+endif
+
 " Не выгружать буфер, когда переключаемся на другой
 " Это позволяет редактировать несколько файлов в один и тот же момент без необходимости сохранения каждый раз
 " когда переключаешься между ними
@@ -144,13 +146,6 @@ set imsearch=0 " аналогично для строки поиска и вво
 "set foldenable
 " Сворачивание по синтаксу
 "set fdm=syntax
-" highlight trailing spaces
-au BufNewFile,BufRead * let b:mtrailingws=matchadd('ErrorMsg', '\s\+$', -1)
-" highlight tabs between spaces
-au BufNewFile,BufRead * let b:mtabbeforesp=matchadd('ErrorMsg', '\v(\t+)\ze( +)', -1)
-au BufNewFile,BufRead * let b:mtabaftersp=matchadd('ErrorMsg', '\v( +)\zs(\t+)', -1)
-" disable matches in help buffers
-au BufEnter,FileType help call clearmatches()
 
 " Горячие клавиши -->
 "запустить Tagbar
@@ -175,7 +170,7 @@ imap <C-L> <Del>
 
 "cmap <C-H> <BS>
 cmap <C-J> <Left>
-cmap <C-K> <Right>
+cmap <C-K> <Right> 
 cmap <C-L> <Del>
 " <--
 
@@ -225,6 +220,7 @@ imap <PageDown> <C-O><C-D><C-O><C-D>
 
 
 " Горячие клавиши <--
+
 " Восстановление позиции курсора при открытии файла в Vim
 if has("autocmd")
     set viewoptions=cursor,folds
