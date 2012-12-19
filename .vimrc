@@ -160,23 +160,23 @@ imap <F8> <esc>:TagbarToggle<cr>i<right>
 
 
 " Ускоренное передвижение по тексту
-nmap <C-H> 5h
-nmap <C-J> 5j
-nmap <C-K> 5k
-nmap <C-L> 5l
+"nmap <C-H> 5h
+"nmap <C-J> 5j
+"nmap <C-K> 5k
+"nmap <C-L> 5l
 
 " Клавиши быстрого редактирования строки в режиме вставки
 " и в режиме редактирования командной строки.
 " -->
 "imap <C-H> <BS>
-imap <C-J> <Left>
-imap <C-K> <Right>
-imap <C-L> <Del>
+"imap <C-J> <Left>
+"imap <C-K> <Right>
+"imap <C-L> <Del>
 
 "cmap <C-H> <BS>
-cmap <C-J> <Left>
-cmap <C-K> <Right>
-cmap <C-L> <Del>
+"cmap <C-J> <Left>
+"cmap <C-K> <Right>
+"cmap <C-L> <Del>
 " <--
 
 
