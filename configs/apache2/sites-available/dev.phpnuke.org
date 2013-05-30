@@ -1,0 +1,4 @@
+<VirtualHost 127.0.0.1:80>
+    ServerName dev.phpnuke.org
+    DocumentRoot /var/www/toggle3/public_html/
+</VirtualHost>

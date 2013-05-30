@@ -1,0 +1,13 @@
+server { listen 80;	server_name toggle.com facebook.toggle.com virtualno.toggle.com virtual_no.toggle.com virtual-no.toggle.com vb-test.toggle.com *.vb-test.toggle.com t3.toggle.com *.t3.toggle.com pre-prod.toggle.com *.pre-prod.toggle.com dev.toggle.com; rewrite ^(.*) http://www.toggle.com$1 permanent; }
+server { listen 80;	server_name gratuit.toggle.com;	rewrite ^(.*) http://telecharger.toggle.com$1 permanent; }
+server { listen 80;	server_name ircfast.com spanish.ircfast.com spain.ircfast.com descargar.ircfast.com arfes.ircfast.com downs2.ircfast.com dev.ircfast.com; rewrite ^(.*) http://www.ircfast.com$1 permanent; }
+server { listen 80;	server_name descargas.ircfast.com virtual.ircfast.com sms.ircfast.com; rewrite ^(.*) http://english.ircfast.com$1 permanent; }
+server { listen 80;	server_name deutch.ircfast.com;	rewrite ^(.*) http://deutsch.ircfast.com$1 permanent; }
+server { listen 80;	server_name ircfast2.com spanish.ircfast2.com dev.ircfast2.com;	rewrite ^(.*) http://www.ircfast2.com$1 permanent; }
+server { listen 80;	server_name benjaminstrahs.com www.benjaminstrahs.com dev.benjaminstrahs.com; rewrite ^(.*) http://descargar.benjaminstrahs.com$1 permanent; }
+server { listen 80;	server_name downius.com spanish.downius.com dev.downius.com; rewrite ^(.*) http://www.downius.com$1 permanent; }
+server { listen 80; server_name phpnuke.org www.phpnuke.org mail.phpnuke.org dev.phpnuke.org; rewrite ^(.*) http://downloads.phpnuke.org$1 permanent; }
+server { listen 80;	server_name software112.com dev.software112.com; rewrite ^(.*) http://www.software112.com$1 permanent; }
+server { listen 80;	server_name sembrarpaz.com dev.sembrarpaz.com; rewrite ^(.*) http://www.sembrarpaz.com$1 permanent; }
+server { listen 80;	server_name downloadshareware.com dev.downloadshareware.com; rewrite ^(.*) http://www.downloadshareware.com$1 permanent; }
+server { listen 80; server_name allnewsw.com dev.allnewsw.com; rewrite ^(.*) http://www.allnewsw.com$1 permanent; }

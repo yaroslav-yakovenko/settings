@@ -1,0 +1,90 @@
+server {
+	listen	  80 default;
+	server_name _;
+
+	set $referer_search_query '';
+	set $var_cookie_special "$cookie_special";
+	set $var_cookie_search "$cookie_search";
+	set $my_debug "";
+
+	include /usr/local/nginx/conf/nginx_shared.conf;
+	include /usr/local/nginx/conf/my_proxy.conf;
+	include /usr/local/nginx/conf/my_special_locations.conf;
+
+	location @proxy_without_cache {
+		proxy_pass	http://upstream_base;
+#		header_filter_by_lua_file /usr/local/nginx/conf/lua/tracking_cookie.lua;
+	}
+	location @proxy_with_cache {
+		proxy_cache htmlcache;
+		proxy_cache_key "$scheme|$host$uri$is_args$args|$http_host|$cookie_irlogged|$cookie_fbuid|$geoip_country_code";
+		proxy_cache_methods GET HEAD;
+		proxy_pass  http://upstream_base;
+		header_filter_by_lua_file /usr/local/nginx/conf/lua/tracking_cookie.lua;
+	}
+	location @proxy_with_cache_home {
+		proxy_cache homecache;
+		proxy_cache_key "$scheme|$host$uri$is_args$args|$http_host|$cookie_irlogged|$cookie_fbuid|$geoip_country_code";
+		proxy_cache_methods GET HEAD;
+		proxy_pass  http://upstream_base;
+		header_filter_by_lua_file /usr/local/nginx/conf/lua/tracking_cookie.lua;
+	}
+	location @proxy_with_cache_download {
+#		limit_conn limit_one 1;
+#		proxy_cache_methods GET HEAD POST;
+		proxy_pass  http://upstream_base;
+		header_filter_by_lua_file /usr/local/nginx/conf/lua/tracking_cookie.lua;
+	}
+	location @proxy_with_cache_media {
+		expires 7d;
+		access_log off;
+		root /home/dumped_static/;
+#		proxy_cache mediacache;
+#		proxy_cache_key "$scheme|$host$uri|$http_host|$geoip_country_code";
+#		proxy_cache_methods GET HEAD;
+#		proxy_pass  http://upstream_media;
+	}
+	location @proxy_without_cache_media {
+		expires 1d;
+		access_log off;
+		root /home/dumped_static/;
+#		proxy_cache_methods GET HEAD POST;
+#		proxy_pass  http://upstream_media;
+	}
+	location @home_lua {
+		access_log off;
+		default_type  text/html;
+		content_by_lua_file /usr/local/nginx/conf/lua/rvs_home.lua;
+	}
+	location = /robots.txt {
+		access_log off;
+		default_type  text/plain;
+		content_by_lua_file /usr/local/nginx/conf/lua/robots.lua;
+	}
+	location = /isok.php {
+		include /usr/local/nginx/conf/fastcgi.conf;
+		if ($http_x_nginx_skip_logging != "") {
+			access_log off;
+		}
+		access_log /usr/local/nginx/logs/isok.log custom;
+		fastcgi_param  SCRIPT_FILENAME  /home/toggle3/scripts/nginx/isok.php;
+		fastcgi_pass upstream_fastcgi;
+	}
+#	location = /autocomplete_sphinx {
+#		set_unescape_uri $sql $arg_query;
+#		drizzle_query $sql;
+#		drizzle_pass upstream_sphinx;
+#		drizzle_connect_timeout    500ms; # default 60s
+#		drizzle_send_query_timeout 2s;    # default 60s
+#		drizzle_recv_cols_timeout  1s;    # default 60s
+#		drizzle_recv_rows_timeout  1s;    # default 60s
+#	}
+#	location ~ "^/purge/([a-z]{2})(/.*)" {
+#		allow 127.0.0.1;
+#		deny  all;
+#		proxy_cache_purge htmlcache $scheme|$host$1$is_args$args|$http_host|||$geoip_country_code;
+#		proxy_cache_purge homecache $1$is_args$args;
+#		proxy_cache_purge downloadcache $1$is_args$args;
+#		proxy_cache_purge mediacache $1$is_args$args;
+#	}
+}

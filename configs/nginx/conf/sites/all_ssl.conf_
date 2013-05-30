@@ -1,0 +1,52 @@
+server {
+	listen	  443 default;
+	server_name _;
+
+	set $referer_search_query '';
+    set $var_cookie_special "$cookie_special";
+    set $var_cookie_search "$cookie_search";
+	set $my_debug "";
+
+	include /usr/local/nginx/conf/my_proxy.conf;
+	include /usr/local/nginx/conf/my_special_locations.conf;
+
+	keepalive_timeout    70;
+
+	ssl                  on;
+	ssl_certificate      /usr/local/nginx/conf/ssl/nginx.pem;
+	ssl_certificate_key  /usr/local/nginx/conf/ssl/nginx-key.pem;
+	ssl_session_cache    shared:SSL:10m;
+	ssl_session_timeout  10m;
+
+	include /usr/local/nginx/conf/nginx_shared.conf;
+
+	location @proxy_without_cache {
+		proxy_pass	http://upstream_base;
+	}
+	location @proxy_with_cache_home {
+		proxy_pass  http://upstream_base;
+	}
+	location @proxy_with_cache {
+		proxy_pass  http://upstream_base;
+	}
+	location @proxy_with_cache_media {
+		root /home/dumped_static/;
+#		proxy_pass  http://upstream_media;
+	}
+	location @proxy_without_cache_media {
+		root /home/dumped_static/;
+#		proxy_pass  http://upstream_media;
+	}
+	location @proxy_with_cache_download {
+		proxy_pass  http://upstream_base;
+	}
+	location @home_lua {
+		# Uncomment for dev only!
+		#lua_code_cache off;
+
+		access_log off;
+
+		default_type  text/html;
+		content_by_lua_file /usr/local/nginx/conf/lua/rvs_home.lua;
+	}
+}

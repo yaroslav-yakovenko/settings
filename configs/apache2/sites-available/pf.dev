@@ -1,0 +1,5 @@
+ <VirtualHost 127.0.0.1:80>
+    ServerName  pf.dev
+    DocumentRoot /var/www/pf_admin/
+    Alias /admin/ /var/www/pf_admin/admin/
+</VirtualHost>
