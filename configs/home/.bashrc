@@ -130,3 +130,5 @@ function git_status {
 
  ## INFO: wrap colors in \[foo\] to fix to line wrap issues.
  export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\$(git_status)\]\$(git_branch)\[\$(tput sgr 0)\]$ "
+[[ -s "/home/yyv/.rvm/scripts/rvm" ]] && source "/home/yyv/.rvm/scripts/rvm"
+[[ -s "/home/root/.rvm/scripts/rvm" ]] && source "/home/root/.rvm/scripts/rvm"
