@@ -40,12 +40,12 @@ force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
     else
-	color_prompt=
+    color_prompt=
     fi
 fi
 
@@ -111,7 +111,7 @@ alias gx='gitx --all'
 alias got='git '
 alias get='git '
 
-function git_branch { 
+function git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[git:\1]/';
     }
 
@@ -119,7 +119,7 @@ function git_branch {
 function git_status {
     [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && tput setaf 1 || tput setaf 3
  }
- 
+
   # tput +
  # sgr 0 = default color;
  # setaf = foreground; setab = background;
@@ -129,6 +129,8 @@ function git_status {
 # otherwise it's green
 
  ## INFO: wrap colors in \[foo\] to fix to line wrap issues.
- export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\$(git_status)\]\$(git_branch)\[\$(tput sgr 0)\]$ "
+ export PS1="\[\033[01;32m\]\u\[\033[01;31m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\$(git_status)\]\$(git_branch)\[\$(tput sgr 0)\]$ "
+
+
 [[ -s "/home/yyv/.rvm/scripts/rvm" ]] && source "/home/yyv/.rvm/scripts/rvm"
 [[ -s "/home/root/.rvm/scripts/rvm" ]] && source "/home/root/.rvm/scripts/rvm"
