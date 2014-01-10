@@ -50,7 +50,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -129,6 +129,6 @@ function git_status {
 # otherwise it's green
 
  ## INFO: wrap colors in \[foo\] to fix to line wrap issues.
- export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\$(git_status)\]\$(git_branch)\[\$(tput sgr 0)\]$ "
+ export PS1="\[\033[01;31m\]\u\[\033[01;32m\]@\[\033[01;36m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\$(git_status)\]\$(git_branch)\[\$(tput sgr 0)\]$ "
 [[ -s "/home/yyv/.rvm/scripts/rvm" ]] && source "/home/yyv/.rvm/scripts/rvm"
 [[ -s "/home/root/.rvm/scripts/rvm" ]] && source "/home/root/.rvm/scripts/rvm"
