@@ -117,7 +117,7 @@ function git_branch {
 
 
 function git_status {
-    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && tput setaf 1 || tput setaf 3
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && tput setaf 1 || tput setaf 3
  }
 
   # tput +

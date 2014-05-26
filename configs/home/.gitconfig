@@ -34,3 +34,5 @@
 	history-view-vpane-position = 272
 	main-window-view = HistoryView
 	file-view-vpane-position = 519
+[push]
+	default = simple
